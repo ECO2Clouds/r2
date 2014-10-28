@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+  <changeSet id="1" author="dperez">
+        <createTable tableName="experiments">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="bonfire_group_id" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bonfire_user_id" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bonfire_experiment_id" type="bigint" />
+            <column name="start_time" type="bigint" />
+            <column name="end_time" type="bigint" />
+            <column name="application_profile" type="longtext" />
+            <column name="submitted_experiment_descriptor" type="longtext" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+  <changeSet author="dperez" id="autoincriment-experiments">
+    <addAutoIncrement 
+    	    columnDataType="int"
+            columnName="id"
+            incrementBy="1"
+            startWith="1"
+            tableName="experiments"/>
+  </changeSet>
+
+  <changeSet id="creation_action_table" author="dperez">
+        <createTable tableName="action">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="action_type_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vm_id" type="int" />
+            <column name="timestamp" type="bigint" />
+            <column name="action_log" type="longtext" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+   <changeSet id="creation_action_type_table" author="dperez">
+        <createTable tableName="action_type">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+  <changeSet id="creation_vm_table" author="dperez">
+        <createTable tableName="vm">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="experiment_id" type="int" />
+            <column name="bonfire_url" type="varchar(255)" />
+            <column name="ip" type="varchar(255)" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+  <changeSet id="creation_testbed_table" author="dperez">
+       <createTable tableName="testbed">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)" />
+            <column name="url" type="varchar(255)" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+  <changeSet id="creation_host_table" author="dperez">
+       <createTable tableName="host">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="testbed_id" type="int" />
+            <column name="state" type="tinyint" />
+            <column name="name" type="varchar(255)" />
+            <column name="connected" type="boolean" defaultValueBoolean="true" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+  <changeSet id="creation_vm_host_table" author="dperez">
+       <createTable tableName="vm_host">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="host_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vm_id" type="int" />
+            <column name="timestamp" type="bigint" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+    <changeSet id="creation_host_data_table" author="dperez">
+       <createTable tableName="host_data">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="host_id" type="int" />
+            <column name="action_id" type="int" />
+            <column name="disk_usage" type="bigint" />
+            <column name="mem_usage" type="bigint" />
+            <column name="cpu_usage" type="bigint" />
+            <column name="max_disk" type="bigint" />
+            <column name="max_mem" type="bigint" />
+            <column name="max_cpu" type="bigint" />
+            <column name="free_disk" type="bigint" />
+            <column name="free_mem" type="bigint" />
+            <column name="free_cpu" type="bigint" />
+            <column name="used_disk" type="bigint" />
+            <column name="used_mem" type="bigint" />
+            <column name="used_cpu" type="bigint" />
+            <column name="running_vms" type="int" />
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+    <changeSet id="set_autoincrements" author="dperez">
+    	<addAutoIncrement columnDataType="int" columnName="id" incrementBy="1" startWith="1" tableName="host_data"/>
+    	<addAutoIncrement columnDataType="int" columnName="id" incrementBy="1" startWith="1" tableName="vm_host"/>
+    	<addAutoIncrement columnDataType="int" columnName="id" incrementBy="1" startWith="1" tableName="host"/>
+    	<addAutoIncrement columnDataType="int" columnName="id" incrementBy="1" startWith="1" tableName="testbed"/>
+    	<addAutoIncrement columnDataType="int" columnName="id" incrementBy="1" startWith="1" tableName="vm"/>
+    	<addAutoIncrement columnDataType="int" columnName="id" incrementBy="1" startWith="1" tableName="action_type"/>
+    	<addAutoIncrement columnDataType="int" columnName="id" incrementBy="1" startWith="1" tableName="action"/>
+    </changeSet>
+
+    <changeSet author="dperez" id="add_foreign_key_for_previous_tables">
+        <addForeignKeyConstraint 
+    		baseColumnNames="vm_id"
+            baseTableName="action"
+            constraintName="fk_action_vm"
+            referencedColumnNames="id"
+            referencedTableName="vm"/>
+        <addForeignKeyConstraint 
+    		baseColumnNames="action_type_id"
+            baseTableName="action"
+            constraintName="fk_action_action_type"
+            referencedColumnNames="id"
+            referencedTableName="action_type"/>
+        <addForeignKeyConstraint 
+    		baseColumnNames="experiment_id"
+            baseTableName="vm"
+            constraintName="fk_vm_action"
+            referencedColumnNames="id"
+            referencedTableName="experiments"/>
+        <addForeignKeyConstraint 
+    		baseColumnNames="testbed_id"
+            baseTableName="host"
+            constraintName="fk_host_testbed"
+            referencedColumnNames="id"
+            referencedTableName="testbed"/>
+        <addForeignKeyConstraint 
+    		baseColumnNames="host_id"
+            baseTableName="vm_host"
+            constraintName="fk_vm_host_host"
+            referencedColumnNames="id"
+            referencedTableName="host"/>
+        <addForeignKeyConstraint 
+    		baseColumnNames="vm_id"
+            baseTableName="vm_host"
+            constraintName="fk_vm_host_vm"
+            referencedColumnNames="id"
+            referencedTableName="vm"/>
+        <addForeignKeyConstraint 
+    		baseColumnNames="host_id"
+            baseTableName="host_data"
+            constraintName="fk_host_data_host"
+            referencedColumnNames="id"
+            referencedTableName="host"/>
+        <addForeignKeyConstraint 
+            baseColumnNames="action_id"
+            baseTableName="host_data"
+            constraintName="fk_host_data_action"
+            referencedColumnNames="id"
+            referencedTableName="action"/>
+	</changeSet>
+
+</databaseChangeLog>
