@@ -1,0 +1,144 @@
+/* Import the reindeer theme. */
+/* This only allows us to use the mixins defined in it and does not add any styles by itself. */
+@import "../reindeer/reindeer.scss";
+
+/* This contains all of your theme. */
+/* If somebody wants to extend the theme she will include this mixin. */
+@mixin mytheme {
+    /* Include all the styles from the reindeer theme */
+    @include reindeer;
+
+    /* Insert your theme rules here */
+
+    .v-generated-body {
+        background: #ffffff;
+    }
+    .v-label {
+        color: #209E94;
+    }
+
+    .v-textfield {
+        border-color: #209E94;        
+    } 
+
+    .v-textarea {
+        border-color: #209E94;
+    }
+
+    .v-caption {
+        color: #209E94;
+    }
+
+    .v-table-header {
+        background-color: #209E94;
+        text-shadow: none;
+        color: #FFFFFF;
+        border-color: #209E94;
+    }
+
+    .v-table-header-cell {
+        color: #FFFFFF;
+    }
+
+    .v-table-body {
+        border-color: #209E94;
+    }
+
+    .v-tabsheet {
+        border: #209E94;
+    }
+    
+    hr {
+        color: #209E94;
+    }
+    /* .v-tabsheet-tabs {
+        background-image:none;
+        background-color: #209E94;
+        
+    }
+    
+    .v-tabsheet {
+        background-image:none;
+        background-color: #209E94;
+    }
+
+    .v-tabsheet-tabcontainer-bar {
+        
+    }
+    
+    .v-tabsheet-tabitem {
+        background-image: none;
+        background: #209E94;
+        color: #FFFFFF;
+        text-shadow: none;        
+    }
+    
+    .v-tabsheet-spacertd div {
+        border: none;
+        height: 32px;
+        background-image: none;
+        background: #209E94;
+        text-shadow: none;
+        color: #FFFFFF;
+        border-color: #209E94;
+    }
+    
+    .v-tabsheet-tabitem-selected {
+        background-image: none;
+        background: #31A8DB;
+        color: #FFFFFF;
+        text-shadow: none;        
+    }
+    */
+
+    .v-checkbox {
+        color: #209E94;
+    }
+
+    .v-select {
+        border:  #209E94;
+        color: #209E94;
+    }
+
+    .v-label-e2c {
+        font-weight: bold;
+    }
+
+    .v-panel-deco {
+        height: 0px;
+    }
+
+    .v-panel-content-e2c {
+        border-top: 0px solid transparent;
+        border-bottom: 2px solid #31A8DB;
+        border-right: 2px solid #31A8DB;
+        border-left: 2px solid #31A8DB;
+        background: #ADDCF1 repeat;
+        border-radius: 0px 0px 10px 10px;        
+        -webkit-border-radius: 0px 0px 10px 10px;        
+        -moz-border-radius: 0px 0px 10px 10px;        
+    }
+
+    .v-panel-content-e2c {
+        border-top: 0px solid transparent;
+        border-bottom: 2px solid #31A8DB;
+        border-right: 2px solid #31A8DB;
+        border-left: 2px solid #31A8DB;
+        background: #ADDCF1 repeat;
+        border-radius: 0px 0px 10px 10px;        
+        -webkit-border-radius: 0px 0px 10px 10px;        
+        -moz-border-radius: 0px 0px 10px 10px;        
+    }
+
+    .v-panel-nocaption-e2c {
+        height: 10px;
+        border-top: 2px solid #31A8DB;
+        border-bottom: 0px solid transparent;
+        border-right: 2px solid #31A8DB;
+        border-left: 2px solid #31A8DB;
+        background: #ADDCF1 repeat;
+        border-radius: 10px 10px 0px 0px;        
+        -webkit-border-radius: 10px 10px 0px 0px;
+        -moz-border-radius: 10px 10px 0px 0px;        
+    }
+}

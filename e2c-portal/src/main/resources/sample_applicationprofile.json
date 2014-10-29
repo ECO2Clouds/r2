@@ -1,0 +1,110 @@
+
+  {
+    "applicationprofile": {
+        "flow": {
+            "sequence": [
+                "Application Initialization & Launch",
+               	"Oceanographic Data Copying",              
+                {
+                    "loop": [
+                        {
+                            "sequence": [
+                                "Copy 1 month data in RAM & Process Data",
+                                "Write / Update files (florida1.dat, florida2.dat, Successful arrival of larvae)"
+                            ]
+                        },
+                        {
+                            "iteration": {
+                                "num": 1,
+                                "prob":1.0
+                            }
+                        },
+                        {
+                            "iteration": {
+                                "num": 2,
+                                "prob":1.0
+                            }
+                        },                   
+                        {
+                            "iteration": {
+                                "num": 62,
+                                "prob":1.0
+                            }
+                        }
+                    ]
+                },
+				"Writing files (isolength.fig, ocean map and 3  files (trajectory))", 
+				"Post Processing",
+				"Writing stat.txt, generating Output folder, copy to storage and delete Output.zip from Local Storage" 
+            ]
+        },
+        "requirements": {
+            "constraints": [                
+                {
+                    "indicator": "Responsetime",
+                    "element": "Data Copying",
+                    "operator": "<",
+                    "value": "20mins"
+                },
+                {
+                    "indicator": "TotalResponsetime",
+                    "element": "Application",
+                    "operator": "<",
+                    "value": "35mins"
+				}
+            ]
+        },
+        "resources": {
+            "name": "Eels Experiment",
+            "description": "Eels Application",
+            "duration": 240,
+            "resources": [
+                {
+                    "compute": {
+                        "name": "Application Controller",
+                        "description": "Application Controller",
+                        "instanceType": "small",
+                        "locations": [
+                            "uk-epcc"
+                        ],
+                        "resources": [
+                            {
+                                "storage": "@BonFIREDebianSqueezev3"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "compute": {
+                        "name": "Simulation Node",
+                        "description": "Simulation Node for Eels application",
+                        "instanceType": "medium",
+                        "locations": [
+                            "uk-epcc"
+                        ],
+                        "resources": [
+                            {
+                                "storage": "@BonFIREDebianSqueezev5"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "data": {
+            "datadependency": [
+                "Oceanographic Data copying : Oceanographic Data Block",
+				"Copy 1 month data in RAM & Process Data: Local Storage",
+                "Write / Update files (florida1.dat, florida2.dat, Successful arrival of larvae): Local Storage",
+				"Writing files (isolength.dat, ocean map and 3 trajectory files): Local Storage",
+				"Writing stat.txt, generating Output folder, copy to storage and delete Output.zip from Local Storage: Local Storage"
+            ]
+        }
+    }
+}

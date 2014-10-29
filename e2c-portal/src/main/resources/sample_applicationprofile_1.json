@@ -1,0 +1,112 @@
+{
+    "applicationprofile": {
+        "flow": {
+            "sequence": [
+                {
+                    "task": "Application Initialization"
+                },
+                {
+                    "task": "Oceanographic Data copying"
+                },
+                {
+                    "loop": [
+                        {
+                            "sequence": [
+                                {
+                                    "task": "Data copying in RAM and data processing"
+                                },
+                                {
+                                    "task": "Write/update file"
+                                }
+                            ]
+                        },
+                        {
+                            "iteration": {
+                                "num": 62,
+                                "prob": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "task": "Writing trajectories"
+                },
+                {
+                    "task": "Post processing"
+                },
+                {
+                    "task": "Generating results files"
+                }
+            ]
+        },
+        "requirements": {
+            "constraints": [
+                {
+                    "indicator": "Responsetime",
+                    "element": "Oeanographic Data Copying",
+                    "operator": "<",
+                    "value": "20mins"
+                },
+                {
+                    "indicator": "TotalResponsetime",
+                    "element": "Application",
+                    "operator": "<",
+                    "value": "35mins"
+                }
+            ]
+        },
+        "resources": {
+            "name": "Eels Experiment",
+            "description": "Eels Application",
+            "duration": 240,
+            "resources": [
+                {
+                    "compute": {
+                        "name": "Application Controller",
+                        "description": "Application Controller",
+                        "instanceType": "small",
+                        "locations": [
+                            "uk-epcc"
+                        ],
+                        "resources": [
+                            {
+                                "storage": "@BonFIREDebianSqueezev3"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "compute": {
+                        "name": "Simulation Node",
+                        "description": "Simulation Node for Eels application",
+                        "instanceType": "medium",
+                        "locations": [
+                            "uk-epcc"
+                        ],
+                        "resources": [
+                            {
+                                "storage": "@BonFIREDebianSqueezev5"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "data": {
+            "datadependency": [
+                {
+                    "Data copying": "OceanographicData"
+                },
+                {
+                    "Data writing": "OceanographicData"
+                }
+            ]
+        }
+    }
+}

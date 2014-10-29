@@ -1,0 +1,115 @@
+{
+    "applicationprofile": {
+        "flow": {
+            "sequence": [
+                {
+                    "task": "Load distribution"
+                },
+                {
+                    "loop": [
+                        {
+                            "sequence": [
+                                {
+                                    "task": "Simulate a year"
+                                },
+                                {
+                                    "task": "Writing trajectories"
+                                },
+                                {
+                                    "task": "Post processing"
+                                },
+                                {
+                                    "task": "Generating results files"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "requirements": {
+            "constraints": []
+        },
+        "resources": {
+            "name": "EelsApplication",
+            "description": "EelsApplication",
+            "duration": 240,
+            "resources": [
+                {
+                    "compute": {
+                        "name": "Eels Application Controller",
+                        "description": "Eels Application Controller",
+                        "instanceType": "small",
+                        "locations": [],
+                        "resources": [
+                            {
+                                "storage": "EeelsTpccApplicationNode"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "compute": {
+                        "name": "OceanographicData",
+                        "description": "OceanographicData",
+                        "instanceType": "small",
+                        "locations": [],
+                        "resources": [
+                            {
+                                "storage": "OceanographicVM"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "compute": {
+                        "name": "SimulationNode1",
+                        "description": "SimulationNode1",
+                        "instanceType": "medium",
+                        "locations": [],
+                        "resources": [
+                            {
+                                "storage": "EeelsTpccApplicationNode"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "compute": {
+                        "name": "SimulationNode2",
+                        "description": "SimulationNode2",
+                        "instanceType": "large",
+                        "locations": [],
+                        "resources": [
+                            {
+                                "storage": "EeelsTpccApplicationNode"
+                            },
+                            {
+                                "network": "@BonFIREWAN"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "data": {
+            "datadependency": [
+                {
+                    "Datacopying": "OceanographicData"
+                },
+                {
+                    "Datawriting": "OceanographicData"
+                }
+            ]
+        }
+    }
+}

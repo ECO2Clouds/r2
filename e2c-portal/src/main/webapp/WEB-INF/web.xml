@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    
+    <!--servlet>
+        <servlet-name>PortalServlet</servlet-name>
+        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+        <init-param>
+            <param-name>UI</param-name>
+            <param-value>eu.eco2clouds.portal.E2CPortal</param-value>
+        </init-param>
+        <init-param>
+            <param-name>widgetset</param-name>
+            <param-value>eu.eco2clouds.AppWidgetSet</param-value>
+        </init-param>    
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PortalServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PortalServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping-->
+    <servlet>
+        <display-name>REST PortalService</display-name>
+        <servlet-name>RestServlet</servlet-name>  
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>eu.eco2clouds.portal.service.ApplicationConfig</param-value>
+        </init-param>
+            <load-on-startup>1</load-on-startup>
+    </servlet>
+    <context-param>
+        <description>location of properties file</description>
+        <param-name>properties.dir</param-name>
+        <param-value>/etc/e2c-portal</param-value>
+    </context-param> 
+</web-app>
