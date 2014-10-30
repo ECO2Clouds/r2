@@ -1,0 +1,156 @@
+{
+	"applicationprofile":{
+		"flow":{
+			"sequence":[
+				{
+					"branches":[
+						{
+							"branch":[
+								{
+									"prob":0.3
+								}
+								
+							]
+							
+						},
+						{
+							"branch":[
+								{
+									"prob":0.7
+								}
+								
+							]
+							
+						}
+						
+					]
+					
+				}
+				
+			]
+			
+		}
+	,
+	"requirements":{
+		"constraints":[
+			{
+				"indicator":"A-PUE",
+				"element":"VM1",
+				"operator":"<",
+				"value":"1.4"
+			},
+			{
+				"indicator":"Responsetime",
+				"element":"Task1",
+				"operator":"<",
+				"value":"1ms"
+			},
+			{
+				"indicator":"Responsetime",
+				"element":"Application",
+				"operator":"<",
+				"value":"10ms"
+			},
+			{
+				"indicator":"CPUUsage",
+				"element":"VM1",
+				"operator":"><",
+				"values":[
+					"60",
+					"90"
+				]
+			}
+		]
+	},
+	"resources":[{
+		"name":"MyExperiment",
+		"description":"Experimentdescription",
+		"duration":120,
+		"resources":[
+			{
+				"compute":{
+					"name":"Server",
+					"description":"Adescriptionoftheserver.",
+					"instanceType":"small",
+					"locations":[
+						"uk-epcc"
+					],
+					"resources":[
+						{
+							"storage":"@BonFIREDebianSqueezev3"
+						},
+						{
+							"network":"@BonFIREWAN"
+						}
+					]
+				}
+			},
+			{
+				"compute":{
+					"name":"Client",
+					"description":"Adescriptionoftheclient.",
+					"instanceType":"small",
+					"locations":[
+						"fr-inria"
+					],
+					"resources":[
+						{
+							"storage":"@BonFIREDebianSqueezev5"
+						},
+						{
+							"network":"@BonFIREWAN"
+						}
+					]
+				}
+			}
+		]
+	},{"name":"MyExperiment2",
+		"description":"Experiment description 2 ",
+		"duration":180,
+		"resources":[
+			{
+				"compute":{
+					"name":"Server",
+					"description":"A description of the server 2.",
+					"instanceType":"small",
+					"locations":[
+						"uk-epcc"
+					],
+					"resources":[
+						{
+							"storage":"@BonFIREDebianSqueezev3"
+						},
+						{
+							"network":"@BonFIREWAN"
+						}
+					]
+				}
+			},
+			{
+				"compute":{
+					"name":"Client",
+					"description":"A description of the client.",
+					"instanceType":"small",
+					"locations":[
+						"fr-inria"
+					],
+					"resources":[
+						{
+							"storage":"@BonFIREDebianSqueezev5"
+						},
+						{
+							"network":"@BonFIREWAN"
+						}
+					]
+				}
+			}
+		]
+	}
+	],
+	"data":{
+		"datadependency":[
+			"task1","task2"
+]
+	}
+}
+}

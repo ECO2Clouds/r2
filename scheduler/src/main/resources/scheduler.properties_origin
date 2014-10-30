@@ -1,0 +1,7 @@
+# Scheduler configuration example
+bonfire.api.url=${bonfire.api.url}
+bonfire.em.url=${bonfire.em.url}
+bonfire.api.group=${bonfire.api.group}
+accounting.service.url=${accounting.service.url}
+keystore=${keystore}
+keystore.key=${keystore.key}

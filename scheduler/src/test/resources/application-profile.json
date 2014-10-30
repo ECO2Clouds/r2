@@ -1,0 +1,144 @@
+{ "applicationprofile": {
+"flow": {
+          "sequence": [
+              {"task":"task1"},
+              {"task":"task2"},
+                {
+                  "branches": [
+                        {
+                          "branch": [
+                                {
+                                  "prob": 0.3
+                                },
+                              {"task":"task3"}
+                            ]
+                        },
+                        {
+                          "branch": [
+                                {
+                                  "prob": 0.7
+                                },
+                              {"task":"task4"}
+                            ]
+                        }
+                    ]
+                },
+              {"task": "task5"},
+                {
+                  "loop": [
+                        {
+                          "sequence": [
+                              {"task":"task6"},
+                              {"task":"task7"}
+                            ]
+                        },
+                        {
+                          "iteration": {
+                              "num": 1,
+                              "prob": 0.7
+                            }
+                        },
+                        {
+                          "iteration": {
+                              "num": 2,
+                              "prob": 0.3
+                            }
+                        },
+                        {
+                          "iteration": {
+                              "num": 3,
+                              "prob": 0.1
+                            }
+                        },
+                        {
+                          "iteration": {
+                              "num": 4,
+                              "prob": 0.01
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+      "requirements": {
+          "constraints": [
+                {
+                  "indicator":"A-PUE",
+                  "element":"VM1",
+                  "operator":"<",
+                  "value":"1.4"
+                },
+                {
+                  "indicator":"Responsetime",
+                  "element":"Task1",
+                  "operator":"<",
+                  "value":"1ms"
+                },
+                {
+                  "indicator":"Responsetime",
+                  "element":"Application",
+                  "operator":"<",
+                  "value":"10ms"
+                },
+                {
+                  "indicator":"CPUUsage",
+                  "element":"VM1",
+                  "operator":"><",
+                  "values": [
+                      "60",
+                      "90"
+                    ]
+                }
+            ]
+        },
+      "resources": {
+          "name":"MyExperiment",
+          "description":"Experiment description",
+          "duration": 120,
+          "resources": [
+                {
+                  "compute": {
+                      "name":"Client",
+                      "description":"A description of the client",
+                      "instanceType":"small",
+                      "locations": [
+                          "uk-epcc"
+                        ],
+                      "resources": [
+                            {
+                              "storage":"@BonFIREDebianSqueezev3"
+                            },
+                            {
+                              "network":"@BonFIREWAN"
+                            }
+                        ]
+                    }
+                },
+                {
+                  "compute": {
+                      "name":"Server",
+                      "description":"A description of the server",
+                      "instanceType":"small",
+                      "locations": [
+                          "fr-inria"
+                        ],
+                      "resources": [
+                            {
+                              "storage":"@BonFIREDebianSqueezev5"
+                            },
+                            {
+                              "network":"@BonFIREWAN"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+      "data": {
+          "datadependency": [
+              {"task":"task1"},
+              {"task":"task2"}
+            ]
+        }
+    }
+}
