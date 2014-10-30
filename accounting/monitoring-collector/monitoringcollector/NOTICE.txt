@@ -1,0 +1,24 @@
+ECO2Clouds Monitoring Collector
+Copyright (c) 2014 The University of Edinburgh
+
+1. By using the ECO2Clouds Monitoring Collector you confirm that you understand 
+and agree to abide by these terms.
+
+2. You understand that the ECO2Clouds Monitoring Collector Software has 
+been developed under a research project, as an example of how such a service 
+could be developed. Accordingly no assurances or guarantees are given or 
+should be implied with respect to your use of the ECO2Clouds Monitoring 
+Collector, as to whether such use may be suitable to achieve any particular 
+result.
+
+3. THE ECO2Clouds MONITORING COLLECTOR SOFTWARE IS PROVIDED BY THE COPYRIGHT 
+HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL 
+THE UNIVERSITY OF EDINBURGH BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; 
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
+OTHERWISE) ARISING IN ANY WAY OUT OF THE ECO2Clouds MONITORING COLLECTOR 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

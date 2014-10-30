@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet author="dperez" id="addColumn-metrics_experiments_table-column-user_name">
+        <addColumn tableName="metrics_experiments">
+                <column name="user_name" type="varchar(255)" >
+                       <constraints nullable="true"/>
+                </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

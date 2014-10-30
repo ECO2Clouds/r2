@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+		 
+	 	<!--
+	
+	 			TABLE METRICS_EXPERIMENTS
+		
+	 	--> 
+
+  <changeSet id="metrics_experiments_table" author="dperez">
+        <createTable tableName="metrics_experiments">
+            <column name="id_metrics_experiments" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="aggregator_location" type="varchar(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="active" type="tinyint(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+  
+<!--
+
+		TABLE METRICS_VIRTUAL_MACHINE
+	
+--> 
+  
+  <changeSet id="metrics_virtual_machines_table" author="dperez">
+        <createTable tableName="metrics_virtual_machines">
+            <column name="id_metrics_virtual_machines" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="location" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_metrics_experiments" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <modifySql dbms="mysql">
+          	<append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+  
+ <changeSet author="dperez" id="create_index_for_metrics_virtual_machines">
+      <sql>
+  <![CDATA[
+  CREATE INDEX `fk_metrics_virtual_machines_metrics_experiments1_idx` ON `metrics_virtual_machines` (`fk_metrics_experiments` ASC)
+  ]]>
+      </sql>
+  </changeSet>
+  
+<changeSet author="dperez" id="add_foreign_key_for_metrics_virtual_machines">
+  	<addForeignKeyConstraint 
+		baseColumnNames="fk_metrics_experiments"
+		baseTableName="metrics_virtual_machines"
+		constraintName="fk_metrics_virtual_machines_metrics_experiments1"
+		referencedColumnNames="id_metrics_experiments"
+		referencedTableName="metrics_experiments"
+		onDelete="NO ACTION"
+	 	onUpdate="NO ACTION" />
+  </changeSet>
+  
+<!--
+
+		TABLE METRICS_SITE_TABLE
+	
+--> 
+
+  <changeSet id="metrics_sites_table" author="dperez">
+        <createTable tableName="metrics_sites">
+            <column name="id_metrics_sites" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="location" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+  
+<!--
+
+		TABLE METRICS_PHYSICAL_HOSTS
+	
+--> 
+
+  <changeSet id="metrics_physical_hosts_table" author="dperez">
+        <createTable tableName="metrics_physical_hosts">
+            <column name="id_metrics_physical_hosts" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="location" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_metrics_sites" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value=" engine innodb charset=utf8"/>
+        </modifySql>
+  </changeSet>
+
+  <changeSet author="dperez" id="create_index_for_metrics_physical_hosts">
+      <sql>
+  <![CDATA[
+  CREATE INDEX `fk_metrics_physical_hosts_metrics_sites1_idx` ON `metrics_physical_hosts` (`fk_metrics_sites` ASC)
+  ]]>
+      </sql>
+  </changeSet>
+
+  <changeSet author="dperez" id="add_foreign_metrics_physical_hosts">
+    <addForeignKeyConstraint 
+    baseColumnNames="fk_metrics_sites"
+    baseTableName="metrics_physical_hosts"
+    constraintName="fk_metrics_physical_hosts_metrics_sites1"
+    referencedColumnNames="id_metrics_sites"
+    referencedTableName="metrics_sites"
+    onDelete="NO ACTION"
+    onUpdate="NO ACTION" />
+  </changeSet>
+  
+<!--
+
+		TABLE ITEMS
+	
+--> 
+  
+  <changeSet id="items_table" author="dperez">
+      <createTable tableName="items">
+          <column name="id_items" type="int" autoIncrement="true">
+              <constraints primaryKey="true" nullable="false"/>
+          </column>
+          <column name="name" type="varchar(45)">
+              <constraints nullable="false"/>
+          </column>
+          <column name="zabbix_itemid" type="int">
+              <constraints nullable="false"/>
+          </column>
+          <column name="clock" type="BIGINT UNSIGNED">
+              <constraints nullable="false"/>
+          </column>
+          <column name="value" type="double">
+              <constraints nullable="false"/>
+          </column>
+          <column name="unity" type="varchar(45)">
+              <constraints nullable="false"/>
+          </column>
+      </createTable>
+      <modifySql dbms="mysql">
+          <append value=" engine innodb charset=utf8"/>
+      </modifySql>
+   </changeSet>
+   
+<!--
+
+		TABLE EXPERIMENT_ITEMS
+	
+--> 
+      
+   <changeSet id="experiments_items_table" author="dperez">
+       <createTable tableName="experiments_items">
+           <column name="id_experiments_items" type="int" autoIncrement="true">
+               <constraints primaryKey="true" nullable="false"/>
+           </column>
+           <column name="fk_metrics_experiments" type="int">
+               <constraints primaryKey="true" nullable="false"/>
+           </column>
+           <column name="fk_items" type="int">
+               <constraints primaryKey="true" nullable="false"/>
+           </column>
+       </createTable>
+       <modifySql dbms="mysql">
+           <append value=" engine innodb charset=utf8"/>
+       </modifySql>
+    </changeSet>
+
+    <changeSet author="dperez" id="create_index1_for_experiments_items_table">
+        <sql>
+    <![CDATA[
+    CREATE INDEX `fk_experiments_items_metrics_experiments1_idx` ON `experiments_items` (`fk_metrics_experiments` ASC)
+    ]]>
+        </sql>
+    </changeSet>
+	
+    <changeSet author="dperez" id="create_index2_for_experiments_items_table">
+        <sql>
+    <![CDATA[
+    CREATE INDEX `fk_experiments_items_items1_idx` ON `experiments_items` (`fk_items` ASC)
+    ]]>
+        </sql>
+    </changeSet>
+	
+    <changeSet author="dperez" id="add_foreign_experiments_items_1">
+      <addForeignKeyConstraint 
+      baseColumnNames="fk_metrics_experiments"
+      baseTableName="experiments_items"
+      constraintName="fk_experiments_items_metrics_experiments1"
+      referencedColumnNames="id_metrics_experiments"
+      referencedTableName="metrics_experiments"
+      onDelete="NO ACTION"
+      onUpdate="NO ACTION" />
+    </changeSet>
+	
+    <changeSet author="dperez" id="add_foreign_experiments_items_2">
+      <addForeignKeyConstraint 
+      baseColumnNames="fk_items"
+      baseTableName="experiments_items"
+      constraintName="fk_experiments_items_items1"
+      referencedColumnNames="id_items"
+      referencedTableName="items"
+      onDelete="NO ACTION"
+      onUpdate="NO ACTION" />
+    </changeSet>  
+	
+	<!--
+	
+			TABLE VIRTUAL_MACHINE_ITEMS
+		
+	-->  
+
+    <changeSet id="virtual_machines_items_table" author="dperez">
+        <createTable tableName="virtual_machines_items">
+            <column name="id_virtual_machines_items" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fk_metrics_virtual_machines" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fk_items" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value=" engine innodb charset=utf8"/>
+        </modifySql>
+     </changeSet>
+
+     <changeSet author="dperez" id="create_index1_for_virtual_machines_items_table">
+         <sql>
+     <![CDATA[
+     CREATE INDEX `fk_virtual_machines_items_metrics_virtual_machines1_idx` ON `virtual_machines_items` (`fk_metrics_virtual_machines` ASC)
+     ]]>
+         </sql>
+     </changeSet>
+	
+     <changeSet author="dperez" id="create_index2_for_virtual_machines_items_table">
+         <sql>
+     <![CDATA[
+     CREATE INDEX `fk_virtual_machines_items_items1_idx` ON `virtual_machines_items` (`fk_items` ASC)
+     ]]>
+         </sql>
+     </changeSet>
+	 
+     <changeSet author="dperez" id="add_foreign_virtual_machines_items_1">
+       <addForeignKeyConstraint 
+       baseColumnNames="fk_metrics_virtual_machines"
+       baseTableName="virtual_machines_items"
+       constraintName="fk_virtual_machines_items_metrics_virtual_machines1"
+       referencedColumnNames="id_metrics_virtual_machines"
+       referencedTableName="metrics_virtual_machines"
+       onDelete="NO ACTION"
+       onUpdate="NO ACTION" />
+     </changeSet>
+	 
+     <changeSet author="dperez" id="add_foreign_virtual_machines_items_2">
+       <addForeignKeyConstraint 
+       baseColumnNames="fk_items"
+       baseTableName="virtual_machines_items"
+       constraintName="fk_virtual_machines_items_items1"
+       referencedColumnNames="id_items"
+       referencedTableName="items"
+       onDelete="NO ACTION"
+       onUpdate="NO ACTION" />
+     </changeSet>
+	 
+ 	<!--
+	
+ 			TABLE PHYSICAL_HOST_ITEMS
+		
+ 	-->  
+
+     <changeSet id="physical_hosts_items_table" author="dperez">
+         <createTable tableName="physical_hosts_items">
+             <column name="id_physical_hosts_items" type="int" autoIncrement="true">
+                 <constraints primaryKey="true" nullable="false"/>
+             </column>
+             <column name="fk_metrics_physical_hosts" type="int">
+                 <constraints primaryKey="true" nullable="true"/>
+             </column>
+             <column name="fk_items" type="int">
+                 <constraints primaryKey="true" nullable="false"/>
+             </column>
+         </createTable>
+         <modifySql dbms="mysql">
+             <append value=" engine innodb charset=utf8"/>
+         </modifySql>
+      </changeSet>
+	  
+      <changeSet author="dperez" id="create_index1_for_physical_hosts_items_table">
+          <sql>
+      <![CDATA[
+      CREATE INDEX `fk_physical_hosts_items_metrics_physical_hosts1_idx` ON `physical_hosts_items` (`fk_metrics_physical_hosts` ASC)
+      ]]>
+          </sql>
+      </changeSet>
+	
+      <changeSet author="dperez" id="create_index2_for_vphysical_hosts_items_table">
+          <sql>
+      <![CDATA[
+      CREATE INDEX `fk_physical_hosts_items_items1_idx` ON `physical_hosts_items` (`fk_items` ASC)
+      ]]>
+          </sql>
+      </changeSet>
+	 
+      <changeSet author="dperez" id="add_foreign_physical_hosts_items_1">
+        <addForeignKeyConstraint 
+        baseColumnNames="fk_metrics_physical_hosts"
+        baseTableName="physical_hosts_items"
+        constraintName="fk_physical_hosts_items_metrics_physical_hosts1"
+        referencedColumnNames="id_metrics_physical_hosts"
+        referencedTableName="metrics_physical_hosts"
+        onDelete="NO ACTION"
+        onUpdate="NO ACTION" />
+      </changeSet>
+	 
+      <changeSet author="dperez" id="add_foreign_physical_hosts_items_2">
+        <addForeignKeyConstraint 
+        baseColumnNames="fk_items"
+        baseTableName="physical_hosts_items"
+        constraintName="fk_physical_hosts_items_items1"
+        referencedColumnNames="id_items"
+        referencedTableName="items"
+        onDelete="NO ACTION"
+        onUpdate="NO ACTION" />
+      </changeSet>
+	  
+   	<!--
+	
+   			TABLE SITES_ITEMS
+		
+   	-->  
+
+       <changeSet id="sites_items_table" author="dperez">
+           <createTable tableName="sites_items">
+               <column name="id_sites_items" type="int" autoIncrement="true">
+                   <constraints primaryKey="true" nullable="false"/>
+               </column>
+               <column name="fk_metrics_sites" type="int">
+                   <constraints primaryKey="true" nullable="false"/>
+               </column>
+               <column name="fk_items" type="int">
+                   <constraints primaryKey="true" nullable="false"/>
+               </column>
+           </createTable>
+           <modifySql dbms="mysql">
+               <append value=" engine innodb charset=utf8"/>
+           </modifySql>
+        </changeSet>
+  
+        <changeSet author="dperez" id="create_index1_for_sites_items_table">
+            <sql>
+        <![CDATA[
+        CREATE INDEX `fk_sites_items_items1_idx` ON `sites_items` (`fk_items` ASC)
+        ]]>
+            </sql>
+        </changeSet>
+	
+        <changeSet author="dperez" id="create_index2_for_sites_items_table">
+            <sql>
+        <![CDATA[
+        CREATE INDEX `fk_sites_items_metrics_sites1_idx` ON `sites_items` (`fk_metrics_sites` ASC)
+        ]]>
+            </sql>
+        </changeSet>
+	 
+        <changeSet author="dperez" id="add_foreign_sites_items_1">
+          <addForeignKeyConstraint 
+          baseColumnNames="fk_items"
+          baseTableName="sites_items"
+          constraintName="fk_sites_items_items1"
+          referencedColumnNames="id_items"
+          referencedTableName="items"
+          onDelete="NO ACTION"
+          onUpdate="NO ACTION" />
+        </changeSet>
+	 
+        <changeSet author="dperez" id="add_foreign_sites_items_2">
+          <addForeignKeyConstraint 
+          baseColumnNames="fk_metrics_sites"
+          baseTableName="sites_items"
+          constraintName="fk_sites_items_metrics_sites1"
+          referencedColumnNames="id_metrics_sites"
+          referencedTableName="metrics_sites"
+          onDelete="NO ACTION"
+          onUpdate="NO ACTION" />
+        </changeSet>
+
+
+	   	<!--
+	
+	   			TABLE VIRTUAL_MACHINES_PHYSICAL_HOSTS_LINK_TABLE
+		
+	   	-->  
+
+	       <changeSet id="virtual_machines_physical_hosts_link_table" author="dperez">
+	           <createTable tableName="virtual_machines_physical_hosts_link">
+	               <column name="id_virtual_machines_physical_hosts_link" type="int" autoIncrement="true">
+	                   <constraints primaryKey="true" nullable="false"/>
+	               </column>
+	               <column name="fk_metrics_virtual_machines" type="int">
+	                   <constraints nullable="false"/>
+	               </column>
+	               <column name="fk_metrics_physical_hosts" type="int">
+	                   <constraints nullable="false"/>
+	               </column>
+	               <column name="start_time" type="bigint">
+	                   <constraints nullable="false"/>
+	               </column>
+	               <column name="end_time" type="bigint">
+	                   <constraints nullable="true"/>
+	               </column>
+	           </createTable>
+	           <modifySql dbms="mysql">
+	               <append value=" engine innodb charset=utf8"/>
+	           </modifySql>
+	        </changeSet>
+  
+	        <changeSet author="dperez" id="create_index1_for_virtual_machines_physical_hosts_link_table">
+	            <sql>
+	        <![CDATA[
+	        CREATE INDEX `fk_virtual_machines_physical_hosts_link_metrics_virtual_mac_idx` ON `virtual_machines_physical_hosts_link` (`fk_metrics_virtual_machines` ASC)
+	        ]]>
+	            </sql>
+	        </changeSet>
+	
+	        <changeSet author="dperez" id="create_index2_for_virtual_machines_physical_hosts_link_table">
+	            <sql>
+	        <![CDATA[
+	        CREATE INDEX `fk_virtual_machines_physical_hosts_link_metrics_physical_ho_idx` ON `virtual_machines_physical_hosts_link` (`fk_metrics_physical_hosts` ASC)
+	        ]]>
+	            </sql>
+	        </changeSet>
+	 
+	        <changeSet author="dperez" id="add_foreign_virtual_machines_physical_hosts_link_1">
+	          <addForeignKeyConstraint 
+	          baseColumnNames="fk_metrics_virtual_machines"
+	          baseTableName="virtual_machines_physical_hosts_link"
+	          constraintName="fk_virtual_machines_physical_hosts_link_metrics_virtual_machi1"
+	          referencedColumnNames="id_metrics_virtual_machines"
+	          referencedTableName="metrics_virtual_machines"
+	          onDelete="NO ACTION"
+	          onUpdate="NO ACTION" />
+	        </changeSet>
+	 
+	        <changeSet author="dperez" id="add_foreign_virtual_machines_physical_hosts_link_2">
+	          <addForeignKeyConstraint 
+	          baseColumnNames="fk_metrics_physical_hosts"
+	          baseTableName="virtual_machines_physical_hosts_link"
+	          constraintName="fk_virtual_machines_physical_hosts_link_metrics_physical_hosts1"
+	          referencedColumnNames="id_metrics_physical_hosts"
+	          referencedTableName="metrics_physical_hosts"
+	          onDelete="NO ACTION"
+	          onUpdate="NO ACTION" />
+	        </changeSet>
+
+</databaseChangeLog>
